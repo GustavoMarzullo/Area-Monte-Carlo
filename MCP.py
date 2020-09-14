@@ -1,0 +1,114 @@
+import random
+import matplotlib.pyplot as plt
+import scipy.stats as stats
+#Lembre-se sempre de definir o polígono seguindo a ordem dos vértices (tanto faz ser sentido horário ou anti-horário).
+#polígono=[[x1,y1],[x2,y2],...,[xn,yn],[x1,y1]]
+
+def parouimpar(x):
+    '''Assume que x é um número inteiro. Retorna se é par ou ímpar'''
+    if x%2==0:
+        return 'Par'
+    else:
+        return 'Ímpar'
+    
+def yc(x1,y1,x2,y2,xa):
+    '''Calcula onde o raio vertical de xa encontra com a reta (x1,y1)->(x2,y2)'''
+    try:
+        return y1+((y2-y1)/(x2-x1))*(xa-x1)
+    except ZeroDivisionError:
+        return True
+
+def local(xa,ya,x1,y1,x2,y2):
+    '''Retorna se o ponto(xa,ya) está a esquerda, direita, acima, abaixo ou
+entre a reta(x1,y1)->(x2,y2)'''
+    if x1<xa and x2<xa:
+        return 'Esquerda'
+    elif x1>xa and x2>xa:
+        return 'Direita'
+    elif y1<ya and y2<ya:
+        return 'Abaixo'
+    elif y1>ya and y2>ya:
+        return 'Acima'
+    else:
+        return 'Entre'
+
+def testar(x,y,vertices):
+    '''(x,y) é um ponto qualquer. Testa-se se o ponto está dentro do polígono.
+Retorna uma variável booleana. Dentro => True. Fora => False.'''
+    cruzamentos=0
+    for i in range(len(vertices)):
+        try:
+            x1,y1=vertices[i][0],vertices[i][1]
+            x2,y2=vertices[i+1][0],vertices[i+1][1]
+            if local(x,y,x1,y1,x2,y2)=='Esquerda' or local(x,y,x1,y1,x2,y2)=='Direita' or local(x,y,x1,y1,x2,y2)=='Abaixo':
+                continue
+            elif local(x,y,x1,y1,x2,y2)=='Acima':
+                cruzamentos +=1
+            else:
+                if yc(x1,y1,x2,y2,x)>=y:
+                    cruzamentos+=1
+                else:
+                    continue
+        except IndexError:
+            continue
+    if parouimpar(cruzamentos)=='Par':
+        return False
+    else:
+        return True
+
+def jogar(n,v,xmin,xmax,ymin,ymax,grafico=True):
+    '''Joga aleatoriamente n vezes as agulhas do método de Monte Carlo e faz um gráfico.
+O polígono é determinado pelo vetor v e os limites do método por xmin,xmax,ymin,ymax.'''
+    n=int(n)
+    dentro=0
+    dentrox,dentroy=[],[]
+    forax,foray=[],[]
+    for agulhas in range(n):
+        x=random.uniform(xmin,xmax)
+        y=random.uniform(ymin,ymax)
+        if testar(x,y,v)==True:
+            dentro+=1
+            if grafico==True:
+                dentrox.append(x)
+                dentroy.append(y)
+        else:
+            if grafico==True:
+                forax.append(x)
+                foray.append(y)
+    area=((xmax-xmin)*(ymax-ymin))*dentro/n
+
+    if grafico==True:
+        fig, ax = plt.subplots(1)
+        ax.scatter(dentrox, dentroy, c='black', alpha=0.8, edgecolor=None,marker='.')
+        ax.scatter(forax, foray, c='silver', alpha=0.6, edgecolor=None,marker='.')
+        ax.set_aspect('equal')
+        plt.xlabel('x')
+        plt.ylabel('y')
+        plt.annotate('Área='+str(round(area,4)),xycoords='axes fraction',xy = (1.05, 0.8))
+        plt.show()
+    return area
+
+def ts(alpha,gl):
+    '''Retorna o valor de t-student para tal alpha e tal g.l..'''
+    return stats.t.ppf(1-(alpha/2), gl)
+
+def estimativa(v,xmin,xmax,ymin,ymax,n,series,printar=True):
+    '''Joga tantas séries de agulhas n vezes.'''
+    est=[]
+    for i in range(series):
+        est.append(jogar(n,v,xmin,xmax,ymin,ymax,False))
+    desvio=stats.tstd(est)
+    est_atual=sum(est)/series
+    IC= ts(0.05,series-1)*(desvio/(series**0.5))
+    if printar==True:
+        print('Estimativa=',str(round(est_atual,5))+'+/-'+str(round(IC,5))+'\nDev. padrão='+str(round(desvio,5))+'\nAgulhas='+str(n)+'\n-----------------------------')
+    return(est_atual,desvio)
+
+def area(v,xmin,xmax,ymin,ymax,precisao=0.1,series=20,printar=True):
+    '''Retorna a área com uma precisão definida.'''
+    n=1000
+    desvio=precisao
+    while desvio>precisao/1.96:
+        est_atual,desvio=estimativa(v,xmin,xmax,ymin,ymax,n,series,printar)
+        n*=2
+    return est_atual
