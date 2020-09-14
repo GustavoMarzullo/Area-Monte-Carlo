@@ -10,7 +10,7 @@ def parouimpar(x):
         return 'Par'
     else:
         return 'Ímpar'
-    
+
 def yc(x1,y1,x2,y2,xa):
     '''Calcula onde o raio vertical de xa encontra com a reta (x1,y1)->(x2,y2)'''
     try:
@@ -102,13 +102,13 @@ def estimativa(v,xmin,xmax,ymin,ymax,n,series,printar=True):
     IC= ts(0.05,series-1)*(desvio/(series**0.5))
     if printar==True:
         print('Estimativa=',str(round(est_atual,5))+'+/-'+str(round(IC,5))+'\nDev. padrão='+str(round(desvio,5))+'\nAgulhas='+str(n)+'\n-----------------------------')
-    return(est_atual,desvio)
+    return(est_atual,desvio,IC)
 
 def area(v,xmin,xmax,ymin,ymax,precisao=0.1,series=20,printar=True):
     '''Retorna a área com uma precisão definida.'''
     n=1000
-    desvio=precisao
-    while desvio>precisao/1.96:
-        est_atual,desvio=estimativa(v,xmin,xmax,ymin,ymax,n,series,printar)
+    IC=precisao
+    while IC>=precisao:
+        est,desvio,IC=estimativa(v,xmin,xmax,ymin,ymax,n,series,printar)
         n*=2
-    return est_atual
+    return est
