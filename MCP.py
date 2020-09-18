@@ -11,12 +11,14 @@ def parouimpar(x):
     else:
         return 'Ímpar'
 
+
 def yc(x1,y1,x2,y2,xa):
     '''Calcula onde o raio vertical de xa encontra com a reta (x1,y1)->(x2,y2)'''
     try:
         return y1+((y2-y1)/(x2-x1))*(xa-x1)
     except ZeroDivisionError:
         return True
+
 
 def local(xa,ya,x1,y1,x2,y2):
     '''Retorna se o ponto(xa,ya) está a esquerda, direita, acima, abaixo ou
@@ -31,6 +33,7 @@ entre a reta(x1,y1)->(x2,y2)'''
         return 'Acima'
     else:
         return 'Entre'
+
 
 def testar(x,y,vertices):
     '''(x,y) é um ponto qualquer. Testa-se se o ponto está dentro do polígono.
@@ -55,10 +58,29 @@ Retorna uma variável booleana. Dentro => True. Fora => False.'''
         return False
     else:
         return True
+  
 
-def jogar(n,v,xmin,xmax,ymin,ymax,grafico=True):
+def limites(v):
+    '''Retorna o xmin,xmax,ymin e ymax do vetor.'''
+    xmin,xmax,ymin,ymax=v[0][0],0,v[0][1],0
+    item=0
+    for i in v:
+        if i[0]<xmin: #pegando o xmin e xmax
+            xmin=i[0]
+        if i[0]>xmax:
+            xmax=i[0]
+            
+        if i[1]<ymin: #pegando o ymin e ymax
+            ymin=i[1]
+        if i[1]>ymax:
+            ymax=i[1]       
+    return xmin,xmax,ymin,ymax
+    
+    
+def jogar(n,v,grafico=True):
     '''Joga aleatoriamente n vezes as agulhas do método de Monte Carlo e faz um gráfico.
-O polígono é determinado pelo vetor v e os limites do método por xmin,xmax,ymin,ymax.'''
+O polígono é determinado pelo vetor v e os limites do método por xmin,xmax,ymin,ymax.''' 
+    xmin,xmax,ymin,ymax=limites(v)
     n=int(n)
     dentro=0
     dentrox,dentroy=[],[]
@@ -88,15 +110,17 @@ O polígono é determinado pelo vetor v e os limites do método por xmin,xmax,ym
         plt.show()
     return area
 
+
 def ts(alpha,gl):
     '''Retorna o valor de t-student para tal alpha e tal g.l..'''
     return stats.t.ppf(1-(alpha/2), gl)
 
-def estimativa(v,xmin,xmax,ymin,ymax,n,series,printar=True):
+
+def estimativa(v,n,series,printar=True):
     '''Joga tantas séries de agulhas n vezes.'''
     est=[]
     for i in range(series):
-        est.append(jogar(n,v,xmin,xmax,ymin,ymax,False))
+        est.append(jogar(n,v,False))
     desvio=stats.tstd(est)
     est_atual=sum(est)/series
     IC= ts(0.05,series-1)*(desvio/(series**0.5))
@@ -104,11 +128,11 @@ def estimativa(v,xmin,xmax,ymin,ymax,n,series,printar=True):
         print('Estimativa=',str(round(est_atual,5))+'+/-'+str(round(IC,5))+'\nDev. padrão='+str(round(desvio,5))+'\nAgulhas='+str(n)+'\n-----------------------------')
     return(est_atual,desvio,IC)
 
-def area(v,xmin,xmax,ymin,ymax,precisao=0.1,series=20,printar=True):
+def area(v,precisao=0.1,series=20,printar=True):
     '''Retorna a área com uma precisão definida.'''
     n=1000
     IC=precisao
     while IC>=precisao:
-        est,desvio,IC=estimativa(v,xmin,xmax,ymin,ymax,n,series,printar)
+        est,desvio,IC=estimativa(v,n,series,printar)
         n*=2
     return est
