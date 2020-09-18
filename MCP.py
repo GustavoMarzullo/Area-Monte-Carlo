@@ -115,7 +115,7 @@ def ts(alpha,gl):
     return stats.t.ppf(1-(alpha/2), gl)
 
 
-def estimativa(v,n,series,printar=True):
+def estimativa(v,n,series,printar=True): 
     '''Joga tantas séries de agulhas n vezes.'''
     est=[]
     for i in range(series):
@@ -128,10 +128,11 @@ def estimativa(v,n,series,printar=True):
     return(est_atual,desvio,IC)
 
 def area(v,precisao=0.1,series=20,printar=True):
-    '''Retorna a área com uma precisão definida.'''
+    '''Retorna a área com uma precisão relativa definida.'''
     n=1000
-    IC=precisao
-    while IC>=precisao:
+    Incerteza=precisao
+    while Incerteza>=precisao:
         est,desvio,IC=estimativa(v,n,series,printar)
+        Incerteza=100*(IC/est) 
         n*=2
-    return est
+    return est,IC
