@@ -63,7 +63,6 @@ Retorna uma variável booleana. Dentro => True. Fora => False.'''
 def limites(v):
     '''Retorna o xmin,xmax,ymin e ymax do vetor.'''
     xmin,xmax,ymin,ymax=v[0][0],0,v[0][1],0
-    item=0
     for i in v:
         if i[0]<xmin: #pegando o xmin e xmax
             xmin=i[0]
@@ -77,7 +76,7 @@ def limites(v):
     return xmin,xmax,ymin,ymax
     
     
-def jogar(n,v,grafico=True):
+def jogar(v,n,grafico=True):
     '''Joga aleatoriamente n vezes as agulhas do método de Monte Carlo e faz um gráfico.
 O polígono é determinado pelo vetor v e os limites do método por xmin,xmax,ymin,ymax.''' 
     xmin,xmax,ymin,ymax=limites(v)
