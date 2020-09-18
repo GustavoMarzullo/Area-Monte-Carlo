@@ -119,7 +119,7 @@ def estimativa(v,n,series,printar=True):
     '''Joga tantas séries de agulhas n vezes.'''
     est=[]
     for i in range(series):
-        est.append(jogar(n,v,False))
+        est.append(jogar(v,n,False))
     desvio=stats.tstd(est)
     est_atual=sum(est)/series
     IC= ts(0.05,series-1)*(desvio/(series**0.5))
