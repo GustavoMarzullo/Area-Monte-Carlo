@@ -127,7 +127,8 @@ def estimativa(v,n,series,printar=True):
         print('Estimativa=',str(round(est_atual,5))+'+/-'+str(round(IC,5))+'\nDev. padrão='+str(round(desvio,5))+'\nAgulhas='+str(n)+'\n-----------------------------')
     return(est_atual,desvio,IC)
 
-def area(v,precisao=0.1,series=20,printar=True):
+
+def area(v,precisao=1,series=20,printar=True):
     '''Retorna a área com uma precisão relativa definida.'''
     n=1000
     Incerteza=precisao
