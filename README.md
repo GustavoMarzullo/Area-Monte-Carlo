@@ -9,17 +9,17 @@ Calcula a área de um polígono por Monte Carlo.
 	
 **Funções disponíveis:**
 
-_jogar(v,n,grafico=True)_
+__jogar(v,n,grafico=True)__
 
 Joga n agulhas do método de Monte Carlo sobre o polígono definido pelo vetor de vérices v. Retorna a área encontrada.
 Se _grafico=True_, plota um gráfico (recomendável caso queira saber se definiu o polígono corretamente).
 
-_estimativa(v,n,series,printar=True)_
+__estimativa(v,n,series,printar=True)__
 
 Joga n agulhas do método de Monte Carlo sobre o polígono definido pelo vetor de vérices v _series_ vezes. Retorna a área encontrada com o desvio-padrão e intervalo de confiança. 
 Se _printar=True_ mostra os dados de forma mais agradável. 
 
-_area(v,precisao=1,series=20,printar=True)_
+__area(v,precisao=1,series=20,printar=True)__
 
 Vai aumentando n da função _estimativa_ até chegar na precisão relativa(%) desejada. 
 
