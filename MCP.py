@@ -77,8 +77,8 @@ def limites(v):
     
     
 def jogar(v,n,grafico=True):
-    '''Joga aleatoriamente n vezes as agulhas do método de Monte Carlo e faz um gráfico.
-O polígono é determinado pelo vetor v e os limites do método por xmin,xmax,ymin,ymax.''' 
+    '''Joga n agulhas do método de Monte Carlo sobre o polígono definido pelo vetor de vérices v. Retorna a área encontrada.
+\nSe _grafico=True_, plota um gráfico (recomendável caso queira saber se definiu o polígono corretamente).''' 
     xmin,xmax,ymin,ymax=limites(v)
     n=int(n)
     dentro=0
@@ -116,7 +116,7 @@ def ts(alpha,gl):
 
 
 def estimativa(v,n,series,printar=True): 
-    '''Joga tantas séries de agulhas n vezes.'''
+    '''Joga n agulhas do método de Monte Carlo sobre o polígono definido pelo vetor de vérices v series vezes. Retorna a área encontrada com o desvio-padrão e intervalo de confiança.'''
     est=[]
     for i in range(series):
         est.append(jogar(v,n,False))
@@ -129,7 +129,8 @@ def estimativa(v,n,series,printar=True):
 
 
 def area(v,precisao=1,series=20,printar=True):
-    '''Retorna a área com uma precisão relativa definida.'''
+    '''Joga n agulhas do método de Monte Carlo sobre o polígono definido pelo vetor de vérices v _series_ vezes. Retorna a área encontrada com o desvio-padrão e intervalo de confiança. 
+\nSe printar=True mostra os dados de forma mais agradável.  '''
     n=1000
     Incerteza=precisao
     while Incerteza>=precisao:
