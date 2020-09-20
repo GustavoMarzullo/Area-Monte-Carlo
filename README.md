@@ -21,5 +21,5 @@ Se _printar=True_ mostra os dados de forma mais agradável.
 
 _area(v,precisao=1,series=20,printar=True)_
 
-Vai aumentando n da função _estimativa_ até chegar na precisão relativa(%) desejada. 
+Vai aumentando o n da função _estimativa_ até chegar na precisão relativa(%) desejada. 
 
