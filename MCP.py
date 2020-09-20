@@ -78,7 +78,7 @@ def limites(v):
     
 def jogar(v,n,grafico=True):
     '''Joga n agulhas do método de Monte Carlo sobre o polígono definido pelo vetor de vérices v. Retorna a área encontrada.
-\nSe _grafico=True_, plota um gráfico (recomendável caso queira saber se definiu o polígono corretamente).''' 
+\nSe grafico=True, plota um gráfico (recomendável caso queira saber se definiu o polígono corretamente).''' 
     xmin,xmax,ymin,ymax=limites(v)
     n=int(n)
     dentro=0
