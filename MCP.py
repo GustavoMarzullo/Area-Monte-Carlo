@@ -72,7 +72,7 @@ def limites(v):
             ymin=i[1]
         if i[1]>ymax:
             ymax=i[1]       
-    return xmin,xmax,ymin,ymax
+    return xmin-1,xmax+1,ymin-1,ymax+1
     
     
 def jogar(poligono,n,grafico=True):
