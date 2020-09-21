@@ -1,6 +1,6 @@
 Calcula a área de um polígono por Monte Carlo. 
 
-**Como usar:**
+## Como usar
 	
 	1. Instale as bibliotecas matplotlib.pyplot e scipy
 	2. Rode o código via terminal/cmd com 'python -i MCP.py' ou 'python3 -i MCP.py'
