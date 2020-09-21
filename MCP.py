@@ -2,7 +2,6 @@ import random
 import matplotlib.pyplot as plt
 import scipy.stats as stats
 #Lembre-se sempre de definir o polígono seguindo a ordem dos vértices (tanto faz ser sentido horário ou anti-horário).
-#polígono=[[x1,y1],[x2,y2],...,[xn,yn],[x1,y1]]
 
 def parouimpar(x):
     '''Assume que x é um número inteiro. Retorna se é par ou ímpar'''
@@ -80,6 +79,7 @@ def jogar(v,n,grafico=True):
     '''Joga n agulhas do método de Monte Carlo sobre o polígono definido pelo vetor de vérices v. Retorna a área encontrada.
 \nSe grafico=True, plota um gráfico (recomendável caso queira saber se definiu o polígono corretamente).''' 
     xmin,xmax,ymin,ymax=limites(v)
+    v.append(v[-1]) #polígono=[[x1,y1],[x2,y2],...,[xn,yn],[x1,y1]]
     n=int(n)
     dentro=0
     dentrox,dentroy=[],[]
