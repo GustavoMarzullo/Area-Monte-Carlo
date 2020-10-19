@@ -75,7 +75,7 @@ def limites(v):
     return xmin-1,xmax+1,ymin-1,ymax+1
     
     
-def jogar(poligono,n,grafico=True):
+def jogar(poligono,n=5000,grafico=True):
     '''Joga n agulhas do método de Monte Carlo sobre o polígono definido. Retorna a área encontrada.
 \nSe grafico=True, plota um gráfico (recomendável caso queira saber se definiu o polígono corretamente).'''
     v=poligono.copy()
@@ -88,7 +88,7 @@ def jogar(poligono,n,grafico=True):
     for agulhas in range(n):
         x=random.uniform(xmin,xmax)
         y=random.uniform(ymin,ymax)
-        if testar(x,y,v)==True:
+        if testar(x,y,v):
             dentro+=1
             if grafico==True:
                 dentrox.append(x)
