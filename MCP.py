@@ -90,11 +90,11 @@ def jogar(poligono,n=5000,grafico=True):
         y=random.uniform(ymin,ymax)
         if testar(x,y,v):
             dentro+=1
-            if grafico==True:
+            if grafico:
                 dentrox.append(x)
                 dentroy.append(y)
         else:
-            if grafico==True:
+            if grafico:
                 forax.append(x)
                 foray.append(y)
     area=((xmax-xmin)*(ymax-ymin))*dentro/n
@@ -139,3 +139,8 @@ def area(v,precisao=1,series=20,printar=True):
         Incerteza=100*(IC/est) 
         n*=2
     return est,IC
+
+
+t=[[0,0],[1/2,1],[1,0]]
+
+area(t)
