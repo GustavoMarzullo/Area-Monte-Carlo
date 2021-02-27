@@ -139,8 +139,3 @@ def area(v,precisao=1,series=20,printar=True):
         Incerteza=100*(IC/est) 
         n*=2
     return est,IC
-
-
-t=[[0,0],[1/2,1],[1,0]]
-
-area(t)
